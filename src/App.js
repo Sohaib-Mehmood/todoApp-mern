@@ -28,6 +28,21 @@ const handleSubmit = (event) => {
   setNewTodo("");
 };
 
+const handleEdit = (id, text) => {
+  const updatedTodos = todos.map((todo) => {
+    if (todo.id === id) {
+      todo.text = text;
+    }
+    return todo;
+  });
+  setTodos(updatedTodos);
+};
+
+const handleDelete = (id) => {
+  const updatedTodos = todos.filter((todo) => todo.id !== id);
+  setTodos(updatedTodos);
+};
+
 return (
   <div>
     <h1>Todo App</h1>
@@ -39,8 +54,14 @@ return (
       {todos.map((todo) => (
         <li key={todo.id}>
           <span>{todo.text}</span>
-          <button>Delete</button>
-          <button>Edit</button>
+          <button onClick={() => handleDelete(todo.id)}>Delete</button>
+          <button
+            onClick={() =>
+              handleEdit(todo.id, prompt("Edit Todo", todo.text))
+            }
+          >
+            Edit
+          </button>
         </li>
       ))}
     </ul>
